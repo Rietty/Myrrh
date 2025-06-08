@@ -2,6 +2,7 @@
 
 -- Libraries:
 local fsm = require "libs.fsm.hump"
+local game = require "states.game"
 
 -- Menu State:
 local menu = {}
@@ -21,6 +22,12 @@ end
 
 function menu:leave()
     print("Leaving Menu State")
+end
+
+function menu:keypressed(key)
+    if key == "return" then
+        fsm.switch(require "states.game")  -- Transition to the game state when the return key is pressed.
+    end
 end
 
 return menu
