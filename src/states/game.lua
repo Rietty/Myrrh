@@ -4,8 +4,8 @@
 local fsm = require "libs.fsm.hump"
 local evolved = require "libs.ecs.evolved"
 
--- Include the entity builders for creating a given entity as required.
-local player_builder = require "entities.player"
+-- Include the entities for creating a given entity as required.
+local player = require "entities.player"
 
 -- include fragments
 local position = require "fragments.position"
@@ -18,7 +18,7 @@ local game = {}
 function game:enter() 
     print("Entering Game State")
     -- Create a new player and use them.
-    self.player = player_builder:spawn()
+    self.player = player:spawn()
     print("Player created with ID:", self.player)
     print("Player Position:", evolved.get(self.player, position.x), evolved.get(self.player, position.y))
     print("Player Velocity:", evolved.get(self.player, velocity.x), evolved.get(self.player, velocity.y))
