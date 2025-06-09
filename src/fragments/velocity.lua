@@ -1,16 +1,16 @@
--- Myrrh: Position Fragment
--- This fragment is used to indicate the two dimensional position of an object in the game world.
+-- Myrrh: Velocity Fragment
+-- This fragment is used to indicate the two dimensional velocity of an object in the game world.
 
 -- Libraries:
 local evolved = require "libs.ecs.evolved"
 
 local x = evolved.builder()
-    :name('fragments.position.x')
+    :name('fragments.velocity.x')
     :default(0)
     :spawn()
 
 local y = evolved.builder()
-    :name('fragments.position.y')
+    :name('fragments.velocity.y')
     :default(0)
     :spawn()
     

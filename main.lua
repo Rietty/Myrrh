@@ -5,6 +5,10 @@ love.filesystem.setRequirePath(love.filesystem.getRequirePath() .. ";src/?.lua")
 
 -- Libraries:
 local fsm = require "libs.fsm.hump"
+local evolved = require "libs.ecs.evolved"
+
+-- Enable debugging features for various libraries.
+evolved.debug_mode(true)
 
 -- States:
 -- An FSM state machine is used to manage the game states, we need to include/import each state that we will be using.

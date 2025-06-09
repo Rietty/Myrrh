@@ -13,11 +13,11 @@ function menu:enter()
 end
 
 function menu:update(dt)
-    print("Updating Menu State")
+    -- Update.
 end
 
 function menu:draw()
-    print("Drawing Menu State")
+    -- Draw.
 end
 
 function menu:leave()

@@ -14,11 +14,11 @@ function splash:enter()
 end
 
 function splash:update(dt)
-    print("Updating Splash State")
+    -- Update.
 end
 
 function splash:draw()
-    print("Drawing Splash State")
+    -- Draw.
 end
 
 function splash:leave()

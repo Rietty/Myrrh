@@ -2,6 +2,14 @@
 
 -- Libraries:
 local fsm = require "libs.fsm.hump"
+local evolved = require "libs.ecs.evolved"
+
+-- Include the entity builders for creating a given entity as required.
+local player_builder = require "entities.player"
+
+-- include fragments
+local position = require "fragments.position"
+local velocity = require "fragments.velocity"
 
 -- Game State:
 local game = {}
@@ -9,14 +17,19 @@ local game = {}
 -- The following functions are called by the FSM when entering, updating, and drawing the Game state.
 function game:enter() 
     print("Entering Game State")
+    -- Create a new player and use them.
+    self.player = player_builder:spawn()
+    print("Player created with ID:", self.player)
+    print("Player Position:", evolved.get(self.player, position.x), evolved.get(self.player, position.y))
+    print("Player Velocity:", evolved.get(self.player, velocity.x), evolved.get(self.player, velocity.y))
 end
 
 function game:update(dt)
-    print("Updating Game State")
+    -- Update.
 end
 
 function game:draw()
-    print("Drawing Game State")
+    -- Draw.
 end
 
 function game:leave()
