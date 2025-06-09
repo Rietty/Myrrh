@@ -7,10 +7,6 @@ local evolved = require "libs.ecs.evolved"
 -- Include the entities for creating a given entity as required.
 local player = require "entities.player"
 
--- include fragments
-local position = require "fragments.position"
-local velocity = require "fragments.velocity"
-
 -- Game State:
 local game = {}
 
@@ -20,8 +16,6 @@ function game:enter()
     -- Create a new player and use them.
     self.player = player:spawn()
     print("Player created with ID:", self.player)
-    print("Player Position:", evolved.get(self.player, position.x), evolved.get(self.player, position.y))
-    print("Player Velocity:", evolved.get(self.player, velocity.x), evolved.get(self.player, velocity.y))
 end
 
 function game:update(dt)
