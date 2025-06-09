@@ -4,8 +4,15 @@
 local fsm = require "libs.fsm.hump"
 local evolved = require "libs.ecs.evolved"
 
--- Include the entities for creating a given entity as required.
+-- ECS Related Imports:
+-- Entities:
 local player = require "entities.player"
+-- Groups:
+local stages = require "groups.stages"
+-- Systems:
+require "systems.draw"
+require "systems.physics"
+
 
 -- Game State:
 local game = {}
@@ -19,11 +26,11 @@ function game:enter()
 end
 
 function game:update(dt)
-    -- Update.
+    evolved.process(stages.UPDATE)
 end
 
 function game:draw()
-    -- Draw.
+    evolved.process(stages.DRAW)
 end
 
 function game:leave()
