@@ -26,7 +26,7 @@ end
 
 function menu:keypressed(key)
     if key == "return" then
-        fsm.switch(require "states.game")  -- Transition to the game state when the return key is pressed.
+        fsm.switch(game)  -- Transition to the game state when the return key is pressed.
     end
 end
 
