@@ -3,7 +3,12 @@
 
 local map_utils = {}
 
+-- Generates a connected map with rooms.
+-- Each room is represented by a rectangle filled with 0s, and walls are represented by 1s.
 function map_utils.generateConnectedMap(width, height, roomCount, roomMinSize, roomMaxSize)
+    -- We need a random seed to ensure different maps each time the function is called.
+    math.randomseed(os.clock() * 100000000000)
+
     local map = {}
     for y = 1, height do
         map[y] = {}
