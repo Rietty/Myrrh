@@ -8,6 +8,9 @@ local map = require "utils.map"
 -- ECS Related Imports:
 -- Entities:
 local player = require "entities.player"
+local level = require "entities.level"
+-- Fragments:
+local deltatime = require "fragments.deltatime"
 -- Groups:
 local stages = require "groups.stages"
 -- Systems:
@@ -22,15 +25,20 @@ function game:enter()
     print("Entering Game State")
     -- Create a new player and use them.
     self.player = player:spawn()
+    self.level = level:spawn()
     self.map = map.generateConnectedMap(80, 80, 30, 5, 15)
     map.printMap(self.map)
 end
 
 function game:update(dt)
+    -- Update the delta time fragment so systems can use it as they see fit.
+    evolved.set(self.level, deltatime, dt)
+    -- Process all systems with an update.
     evolved.process(stages.UPDATE)
 end
 
 function game:draw()
+    -- Draw all systems that require being able to print to screen.
     evolved.process(stages.DRAW)
 end
 
