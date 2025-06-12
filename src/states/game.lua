@@ -9,10 +9,17 @@ local map = require "utils.map"
 -- Entities:
 local player = require "entities.player"
 local level = require "entities.level"
+
+-- Prefabs:
+local character = require "prefabs.character"
+
 -- Fragments:
 local deltatime = require "fragments.deltatime"
+local position = require "fragments.position"
+
 -- Groups:
 local stages = require "groups.stages"
+
 -- Systems:
 require "systems.draw"
 require "systems.physics"
@@ -23,11 +30,34 @@ local game = {}
 -- The following functions are called by the FSM when entering, updating, and drawing the Game state.
 function game:enter()
     print("Entering Game State")
-    -- Create a new player and use them.
-    self.player = player:spawn()
+
     self.level = level:spawn()
     self.map = map.generateConnectedMap(80, 80, 30, 5, 15)
     map.printMap(self.map)
+
+    local playerEntity = player:clone(character)
+    local player2Entity = player:clone(character)
+
+    
+    -- Print the player positions
+    print("Player 1 Position: ", evolved.get(playerEntity, position.x), evolved.get(playerEntity, position.y))
+    print("Player 2 Position: ", evolved.get(player2Entity, position.x), evolved.get(player2Entity, position.y))
+    
+    evolved.set(playerEntity, position.x, 100)
+    evolved.set(playerEntity, position.y, 100)
+    
+
+    -- Print the player positions
+    print("Player 1 Position: ", evolved.get(playerEntity, position.x), evolved.get(playerEntity, position.y))
+    print("Player 2 Position: ", evolved.get(player2Entity, position.x), evolved.get(player2Entity, position.y))
+
+    evolved.set(player2Entity, position.x, 200)
+    evolved.set(player2Entity, position.y, 200)
+
+    
+    -- Print the player positions
+    print("Player 1 Position: ", evolved.get(playerEntity, position.x), evolved.get(playerEntity, position.y))
+    print("Player 2 Position: ", evolved.get(player2Entity, position.x), evolved.get(player2Entity, position.y))
 end
 
 function game:update(dt)
