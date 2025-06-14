@@ -12,7 +12,7 @@ local velocity = require "fragments.velocity"
 
 -- Player Entity:
 local player = evolved.builder()
-    :name("player")
+    :name("entities.player")
     :set(controllable)
     :set(focus)
     :set(interactor)
