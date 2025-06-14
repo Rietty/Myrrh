@@ -1,9 +1,9 @@
 -- Myrrh: Game State
 
 -- Libraries:
-local fsm = require "libs.fsm.hump"
 local evolved = require "libs.ecs.evolved"
 local map = require "utils.map"
+local layouts = require "utils.layouts"
 
 -- ECS Related Imports:
 -- Entities:
@@ -35,29 +35,18 @@ function game:enter()
     self.map = map.generateConnectedMap(80, 80, 30, 5, 15)
     map.printMap(self.map)
 
-    local playerEntity = player:clone(character)
-    local player2Entity = player:clone(character)
+    self.tileset_image = love.graphics.newImage("assets/Dungeon Archivist - Main Set/Tilesets/Tileset Blue.png")
+    self.tile_quads = {}
 
-    
-    -- Print the player positions
-    print("Player 1 Position: ", evolved.get(playerEntity, position.x), evolved.get(playerEntity, position.y))
-    print("Player 2 Position: ", evolved.get(player2Entity, position.x), evolved.get(player2Entity, position.y))
-    
-    evolved.set(playerEntity, position.x, 100)
-    evolved.set(playerEntity, position.y, 100)
-    
-
-    -- Print the player positions
-    print("Player 1 Position: ", evolved.get(playerEntity, position.x), evolved.get(playerEntity, position.y))
-    print("Player 2 Position: ", evolved.get(player2Entity, position.x), evolved.get(player2Entity, position.y))
-
-    evolved.set(player2Entity, position.x, 200)
-    evolved.set(player2Entity, position.y, 200)
-
-    
-    -- Print the player positions
-    print("Player 1 Position: ", evolved.get(playerEntity, position.x), evolved.get(playerEntity, position.y))
-    print("Player 2 Position: ", evolved.get(player2Entity, position.x), evolved.get(player2Entity, position.y))
+    for y = 1, #map do
+        self.tile_quads[y] = {}
+        for x = 1, #map[y] do
+            if map[y][x] == 0 then
+                self.tile_quads[y][x] = map.random_tile_quad(layouts.tilesets, "main", "floor", self.tileset_image)
+                print("Tile Quad for (" .. x .. ", " .. y .. "): " .. tostring(self.tile_quads[y][x]))
+            end
+        end
+    end
 end
 
 function game:update(dt)
@@ -70,6 +59,13 @@ end
 function game:draw()
     -- Draw all systems that require being able to print to screen.
     evolved.process(stages.DRAW)
+    for y = 1, #map do
+        for x = 1, #map[y] do
+            if map[y][x] == 0 then
+                love.graphics.draw(self.tileset_image, self.tile_quads[y][x], (x - 1) * 32, (y - 1) * 32)
+            end
+        end
+    end
 end
 
 function game:leave()

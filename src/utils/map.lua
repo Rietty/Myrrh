@@ -1,7 +1,8 @@
 -- Myrrh: Map Utilities
 -- Map based utilities, including map generation and manipulation and more.
-
 local map_utils = {}
+
+local TILE_SIZE = 32
 
 -- Generates a connected map with rooms.
 -- Each room is represented by a rectangle filled with 0s, and walls are represented by 1s.
@@ -80,6 +81,25 @@ function map_utils.printMap(map)
         end
         io.write("\n")
     end
+end
+
+-- Retrieves a quad for a given tile. I.e. the coordinates and dimensions of the tile in a tileset.
+-- This can then be used to draw the tile on the screen as needed.
+function map_utils.get_tile_quad(tile, image)
+    return love.graphics.newQuad(
+        (tile.col - 1) * TILE_SIZE,
+        (tile.row - 1) * TILE_SIZE,
+        TILE_SIZE, TILE_SIZE,
+        image:getWidth(),
+        image:getHeight()
+    )
+end
+
+-- Retrieves a random tile quad from a specified category in a tileset.
+function map_utils.random_tile_quad(tilesets, tileset_key, category, image)
+    local tiles = tilesets[tileset_key][category]
+    local tile = tiles[love.math.random(#tiles)]
+    return map_utils.get_tile_quad(tile, image)
 end
 
 return map_utils
