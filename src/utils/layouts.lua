@@ -20,7 +20,8 @@ end
 
 layouts.tilesets = {
     main = {
-        floor = coords(30, range(1, 6))
+        floor = coords(30, range(1, 6)),
+        wall = coords(2, range(1, 12))
     }
 }
 

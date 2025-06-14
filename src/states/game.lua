@@ -33,17 +33,21 @@ function game:enter()
 
     self.level = level:spawn()
     self.map = map.generateConnectedMap(80, 80, 30, 5, 15)
+    self.map = map.postProcessMap(self.map)
     map.printMap(self.map)
 
-    self.tileset_image = love.graphics.newImage("assets/Dungeon Archivist - Main Set/Tilesets/Tileset Blue.png")
+    print("Spawning Player")
+    self.tileset_image = love.graphics.newImage("assets/Dungeon Archivist - Main Set/Tilesets/Tileset Nature.png")
     self.tile_quads = {}
 
-    for y = 1, #map do
+
+    for y = 1, #self.map do
         self.tile_quads[y] = {}
-        for x = 1, #map[y] do
-            if map[y][x] == 0 then
+        for x = 1, #self.map[y] do
+            if self.map[y][x] == 0 then
                 self.tile_quads[y][x] = map.random_tile_quad(layouts.tilesets, "main", "floor", self.tileset_image)
-                print("Tile Quad for (" .. x .. ", " .. y .. "): " .. tostring(self.tile_quads[y][x]))
+            elseif self.map[y][x] == 2 then
+                self.tile_quads[y][x] = map.random_tile_quad(layouts.tilesets, "main", "wall", self.tileset_image)
             end
         end
     end
@@ -59,9 +63,11 @@ end
 function game:draw()
     -- Draw all systems that require being able to print to screen.
     evolved.process(stages.DRAW)
-    for y = 1, #map do
-        for x = 1, #map[y] do
-            if map[y][x] == 0 then
+    for y = 1, #self.map do
+        for x = 1, #self.map[y] do
+            if self.map[y][x] == 0 then
+                love.graphics.draw(self.tileset_image, self.tile_quads[y][x], (x - 1) * 32, (y - 1) * 32)
+            elseif self.map[y][x] == 2 then
                 love.graphics.draw(self.tileset_image, self.tile_quads[y][x], (x - 1) * 32, (y - 1) * 32)
             end
         end

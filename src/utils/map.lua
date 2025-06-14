@@ -73,11 +73,26 @@ function map_utils.generateConnectedMap(width, height, roomCount, roomMinSize, r
     return map
 end
 
+-- Post Processing function to ensure the map has correct tile values for walls.
+-- Basically if the map has a tile such that the one below it is a 0, and this tile is a 1 then it should be marked 2 to be a wall.
+function map_utils.postProcessMap(map)
+    for y = 1, #map do
+        for x = 1, #map[y] do
+            if map[y][x] == 1 and (y < #map and map[y + 1][x] == 0) then
+                map[y][x] = 2 -- Mark as wall
+            end
+        end
+    end
+
+    return map
+end
+
 -- Useful for debugging and visualization of the map before using it in the game.
 function map_utils.printMap(map)
     for y = 1, #map do
         for x = 1, #map[y] do
-            io.write(map[y][x] == 0 and "." or "#")
+            -- io.write(map[y][x] == 0 and "." or "#")
+            io.write(map[y][x])
         end
         io.write("\n")
     end
