@@ -21,7 +21,8 @@ end
 layouts.tilesets = {
     main = {
         floor = coords(30, range(1, 6)),
-        wall = coords(2, range(1, 12))
+        wall = coords(2, range(1, 12)),
+        object = coords(20, range(1, 12)),
     }
 }
 
